@@ -3,25 +3,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterSharedpref extends StatefulWidget {
   const RegisterSharedpref({super.key});
-
   @override
   State<RegisterSharedpref> createState() => _RegisterSharedprefState();
 }
 
 class _RegisterSharedprefState extends State<RegisterSharedpref> {
+
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
   String _registrationMessage = '';
 
   Future<void> _register() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String username = usernameController.text;
     String password = passwordController.text;
-
+    
     if (username.isNotEmpty && password.isNotEmpty) {
       await prefs.setString('username', username);
       await prefs.setString('password', password);
-
       setState(() {
         _registrationMessage = 'Registration Successful!';
       });
@@ -31,7 +31,6 @@ class _RegisterSharedprefState extends State<RegisterSharedpref> {
       });
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -151,13 +150,13 @@ class _RegisterSharedprefState extends State<RegisterSharedpref> {
                           ),
                         ),
                       ),
-                      Text(_registrationMessage),
+                      Center(child: Text(_registrationMessage)),
                       SizedBox(height: 20),
                       TextButton(
                         onPressed: () {
                           Navigator.pop(context); // Go back to login page
                         },
-                        child: Text('Go to Login'),
+                        child: Center(child: Text('Go to Login')),
                       ),
                     ],
                   ),

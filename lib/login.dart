@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:user_authentication/home.dart';
 import 'package:user_authentication/register.dart';
 
 class LoginSharedpref extends StatefulWidget {
@@ -12,10 +13,12 @@ class LoginSharedpref extends StatefulWidget {
 class _LoginSharedprefState extends State<LoginSharedpref> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
   String _loginMessage = '';
 
   Future<void> _login() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     String? storedUsername = prefs.getString('username');
     String? storedPassword = prefs.getString('password');
 
@@ -23,6 +26,8 @@ class _LoginSharedprefState extends State<LoginSharedpref> {
         storedPassword == passwordController.text) {
       setState(() {
         _loginMessage = 'Login Successful!';
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       });
     } else {
       setState(() {
@@ -35,21 +40,20 @@ class _LoginSharedprefState extends State<LoginSharedpref> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 30),
-        width: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            colors: <Color>[
-              Color.fromARGB(244, 0, 255, 8),
-              Colors.green,
-              const Color.fromARGB(255, 5, 83, 55),
-            ],
+          padding: EdgeInsets.symmetric(vertical: 30),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              colors: <Color>[
+                Color.fromARGB(244, 0, 255, 8),
+                Colors.green,
+                const Color.fromARGB(255, 5, 83, 55),
+              ],
+            ),
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             SizedBox(height: 80),
             Padding(
               padding: EdgeInsets.all(20),
@@ -173,9 +177,7 @@ class _LoginSharedprefState extends State<LoginSharedpref> {
                 ),
               ),
             ),
-          ],
-        ),
-      ),
+          ])),
     );
   }
 }
